@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4B9ADA2B-3A0E-438C-8916-26BD5DE09174}</ProjectGuid>
+    <ProjectGuid>{1DCF8BFB-C8DC-45C4-8D3E-D25451BAA7FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OBeautifulCode.Enum</RootNamespace>

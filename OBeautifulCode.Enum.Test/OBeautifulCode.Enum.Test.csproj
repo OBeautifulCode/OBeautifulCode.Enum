@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{48ED9025-9A2C-4BA9-8112-C804E7A9A3F2}</ProjectGuid>
+    <ProjectGuid>{3EEF4E37-1D7D-4C77-BD92-EBBF03765DCC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OBeautifulCode.Enum.Test</RootNamespace>
@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBeautifulCode.Enum\OBeautifulCode.Enum.csproj">
-      <Project>{4b9ada2b-3a0e-438c-8916-26bd5de09174}</Project>
+      <Project>{1DCF8BFB-C8DC-45C4-8D3E-D25451BAA7FC}</Project>
       <Name>OBeautifulCode.Enum</Name>
     </ProjectReference>
   </ItemGroup>

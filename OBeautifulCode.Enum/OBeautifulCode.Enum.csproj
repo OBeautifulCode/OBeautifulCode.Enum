@@ -47,15 +47,11 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HashCodeHelper.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThreadSafeRandom.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OBeautifulCode.Math.MathHelper.recipe-nuspec" />
-    <None Include="OBeautifulCode.Math.ThreadSafeRandom.recipe-nuspec" />
-    <None Include="OBeautifulCode.Math.HashCodeHelper.recipe-nuspec" />
     <None Include="packages.config" />
     <None Include="OBeautifulCode.Math.template-nuspec">
       <SubType>Designer</SubType>

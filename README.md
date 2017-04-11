@@ -1,5 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/cy79le6v05nmrph9?svg=true)](https://ci.appveyor.com/project/SurajGupta/obeautifulcode-math)
+[![Build status](https://ci.appveyor.com/api/projects/status/7wraxl6hfrldxria?svg=true)](https://ci.appveyor.com/project/SurajGupta/obeautifulcode-enum)
 
-Math and Numeric Helpers
-========================
-This library provides some math and numeric methods, including a thread-safe random number generator and a hash code generator.
+Enum Helpers
+============
+This library provides some enum helper methods.

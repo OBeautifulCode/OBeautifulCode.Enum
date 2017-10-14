@@ -10,6 +10,8 @@ namespace OBeautifulCode.Enum.Test
 
     using FluentAssertions;
 
+    using OBeautifulCode.Enum.Recipes;
+
     using Xunit;
 
     public static class EnumExtensionsTest

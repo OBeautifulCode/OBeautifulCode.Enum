@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>OBeautifulCode.Enum.EnumExtensions</id>
+    <id>OBeautifulCode.Enum.Recipes.EnumExtensions</id>
     <description>Convenience methods for enums.</description>
     <tags>enum enumeration extension extensionmethod</tags>
     <developmentDependency>true</developmentDependency>

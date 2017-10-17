@@ -56,7 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="OBeautifulCode.Enum.EnumExtensions.recipe-nuspec" />
+    <None Include="OBeautifulCode.Enum.Recipes.EnumExtensions.recipe-nuspec" />
     <None Include="packages.config" />
     <None Include="OBeautifulCode.Enum.template-nuspec">
       <SubType>Designer</SubType>

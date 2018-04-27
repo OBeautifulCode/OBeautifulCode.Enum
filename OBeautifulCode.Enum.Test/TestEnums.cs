@@ -30,7 +30,9 @@ namespace OBeautifulCode.Enum.Test
 
         Vacation,
 
-        Bulldogs
+        Bulldogs,
+
+        Sunflowers,
     }
 
     [Flags]

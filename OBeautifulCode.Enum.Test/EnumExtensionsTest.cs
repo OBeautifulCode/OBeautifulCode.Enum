@@ -43,12 +43,23 @@ namespace OBeautifulCode.Enum.Test
 
             // Assert
             enumValues1.Should().BeEmpty();
-            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs);
+            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
             enumValues3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
         }
 
         [Fact]
-        public static void GetEnumValues_Type___Should_throw_ArgumentException___When_generic_type_parameter_is_not_of_type_Enum()
+        public static void GetEnumValues_Type___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => EnumExtensions.GetEnumValues(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+            ex.Message.Should().Contain("enumType");
+        }
+
+        [Fact]
+        public static void GetEnumValues_Type___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
         {
             // Arrange, Act
             var ex1 = Record.Exception(() => typeof(int).GetEnumValues());
@@ -73,8 +84,99 @@ namespace OBeautifulCode.Enum.Test
 
             // Assert
             enumValues1.Should().BeEmpty();
-            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs);
+            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
             enumValues3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var ex1 = Record.Exception(() => EnumExtensions.IsFlagsEnum<int>());
+            var ex2 = Record.Exception(() => EnumExtensions.IsFlagsEnum<bool>());
+            var ex3 = Record.Exception(() => EnumExtensions.IsFlagsEnum<byte>());
+            var ex4 = Record.Exception(() => EnumExtensions.IsFlagsEnum<char>());
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+            ex3.Should().BeOfType<ArgumentException>();
+            ex4.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_TEnum___Should_return_false___When_generic_type_parameter_is_not_a_flags_enum()
+        {
+            // Arrange, Act
+            var actual1 = EnumExtensions.IsFlagsEnum<Empty>();
+            var actual2 = EnumExtensions.IsFlagsEnum<GoodStuff>();
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_TEnum___Should_return_true___When_generic_type_parameter_is_a_flags_enum()
+        {
+            // Arrange, Act
+            var actual1 = EnumExtensions.IsFlagsEnum<EmptyFlags>();
+            var actual2 = EnumExtensions.IsFlagsEnum<TravelOptions>();
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_Type___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        {
+            // Arrange, Act
+            var ex = Record.Exception(() => EnumExtensions.IsFlagsEnum(null));
+
+            // Assert
+            ex.Should().BeOfType<ArgumentNullException>();
+            ex.Message.Should().Contain("enumType");
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_Type___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var ex1 = Record.Exception(() => typeof(int).IsFlagsEnum());
+            var ex2 = Record.Exception(() => typeof(bool).IsFlagsEnum());
+            var ex3 = Record.Exception(() => typeof(byte).IsFlagsEnum());
+            var ex4 = Record.Exception(() => typeof(char).IsFlagsEnum());
+
+            // Assert
+            ex1.Should().BeOfType<ArgumentException>();
+            ex2.Should().BeOfType<ArgumentException>();
+            ex3.Should().BeOfType<ArgumentException>();
+            ex4.Should().BeOfType<ArgumentException>();
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_Type___Should_return_false___When_parameter_enumType_is_not_a_flags_enum()
+        {
+            // Arrange, Act
+            var actual1 = typeof(Empty).IsFlagsEnum();
+            var actual2 = typeof(GoodStuff).IsFlagsEnum();
+
+            // Assert
+            actual1.Should().BeFalse();
+            actual2.Should().BeFalse();
+        }
+
+        [Fact]
+        public static void IsFlagsEnum_Type___Should_return_true___When_parameter_enumType_is_a_flags_enum()
+        {
+            // Arrange, Act
+            var actual1 = typeof(EmptyFlags).IsFlagsEnum();
+            var actual2 = typeof(TravelOptions).IsFlagsEnum();
+
+            // Assert
+            actual1.Should().BeTrue();
+            actual2.Should().BeTrue();
         }
 
         [Fact]

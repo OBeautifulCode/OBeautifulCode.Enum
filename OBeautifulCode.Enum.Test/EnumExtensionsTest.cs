@@ -338,6 +338,34 @@ namespace OBeautifulCode.Enum.Test
         }
 
         [Fact]
+        public static void HasFlagOverlap___Should_return_true___With_overlap()
+        {
+            // Arrange
+            var first = TravelOptions.Air | TravelOptions.Bus;
+            var second = TravelOptions.Air | TravelOptions.CommercialPlane;
+
+            // Act
+            var actual = first.HasFlagOverlap(second);
+
+            // Assert
+            actual.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void HasFlagOverlap___Should_return_false___Without_overlap()
+        {
+            // Arrange
+            var first = TravelOptions.RentalCar | TravelOptions.Bus;
+            var second = TravelOptions.PropellerPlane | TravelOptions.CommercialPlane;
+
+            // Act
+            var actual = first.HasFlagOverlap(second);
+
+            // Assert
+            actual.Should().BeFalse();
+        }
+
+        [Fact]
         public static void GetIndividualFlags___Should_throw_ArgumentNullException___When_parameter_value_is_null()
         {
             // Arrange, Act

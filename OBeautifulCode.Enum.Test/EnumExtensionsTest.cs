@@ -379,7 +379,7 @@ namespace OBeautifulCode.Enum.Test
         public static void GetIndividualFlags___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
-            var value1 = GoodStuff.Chocolate;
+            var value1 = GoodStuff.Bulldogs;
             var value2 = GoodStuff.WorkingFromHome;
 
             // Act
@@ -387,7 +387,7 @@ namespace OBeautifulCode.Enum.Test
             var actual2 = value2.GetIndividualFlags();
 
             // Assert
-            actual1.Should().Equal(GoodStuff.Chocolate);
+            actual1.Should().Equal(GoodStuff.Bulldogs);
             actual2.Should().Equal(GoodStuff.WorkingFromHome);
         }
 
@@ -466,7 +466,7 @@ namespace OBeautifulCode.Enum.Test
         public static void GetIndividualFlags_TEnum___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
-            var value1 = GoodStuff.Chocolate;
+            var value1 = GoodStuff.Bulldogs;
             var value2 = GoodStuff.WorkingFromHome;
 
             // Act
@@ -474,7 +474,7 @@ namespace OBeautifulCode.Enum.Test
             var actual2 = value2.GetIndividualFlags<GoodStuff>();
 
             // Assert
-            actual1.Should().Equal(GoodStuff.Chocolate);
+            actual1.Should().Equal(GoodStuff.Bulldogs);
             actual2.Should().Equal(GoodStuff.WorkingFromHome);
         }
 

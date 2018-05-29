@@ -17,7 +17,6 @@ namespace OBeautifulCode.Enum.Test
 
     public static class EnumExtensionsTest
     {
-        // ReSharper disable InconsistentNaming
         [Fact]
         public static void GetEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_is_not_of_type_Enum()
         {
@@ -643,7 +642,5 @@ namespace OBeautifulCode.Enum.Test
             // Assert
             actual.Should().Equal(TravelOptions.Train, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.Taxi);
         }
-
-        // ReSharper restore InconsistentNaming
     }
 }

@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="TestEnums.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ namespace OBeautifulCode.Enum.Test
 
         Wheeled = RentalCar | Bus | Taxi,
 
-        MassTransit = Train | Bus
+        MassTransit = Train | Bus,
     }
 
 #pragma warning restore SA1402 // File may only contain a single class

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OBeautifulCode.Enum.Recipes.EnumExtensions</id>
+    <description>Convenience methods for enums.</description>
+    <tags>enum enumeration extension extensionmethod</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Enum/master/OBeautifulCode.Enum/nuget-icon.png</iconUrl>
+    <dependencies>
+      <dependency id="OBeautifulCode.Validation.Recipes.ParameterValidator" version="1.0.10" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="EnumExtensions.cs" target="content\net462\.recipes\OBeautifulCode.Enum\EnumExtensions.cs" />
+  </files>
+</package>

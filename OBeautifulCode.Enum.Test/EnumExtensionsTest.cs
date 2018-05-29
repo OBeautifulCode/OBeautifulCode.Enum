@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="EnumExtensionsTest.cs" company="OBeautifulCode">
-//   Copyright (c) OBeautifulCode. All rights reserved.
+//   Copyright (c) OBeautifulCode 2018. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
@@ -270,10 +270,8 @@ namespace OBeautifulCode.Enum.Test
             var ex = Record.Exception(() => value.GetFlagsCombinedWherePossible<int>());
 
             // Assert
-            // ReSharper disable PossibleNullReferenceException
             ex.Should().BeOfType<ArgumentException>();
             ex.Message.Should().Contain("typeof TEnum is Enum");
-            // ReSharper restore PossibleNullReferenceException
         }
 
         [Fact]
@@ -456,10 +454,8 @@ namespace OBeautifulCode.Enum.Test
             var ex = Record.Exception(() => value.GetIndividualFlags<int>());
 
             // Assert
-            // ReSharper disable PossibleNullReferenceException
             ex.Should().BeOfType<ArgumentException>();
             ex.Message.Should().Contain("typeof TEnum is Enum");
-            // ReSharper restore PossibleNullReferenceException
         }
 
         [Fact]

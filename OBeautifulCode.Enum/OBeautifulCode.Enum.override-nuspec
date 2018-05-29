@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <description>Provides enum-realted convenience/helper methods.</description>
+    <tags>enum helper</tags>
+    <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Enum/master/OBeautifulCode.Enum/nuget-icon.png</iconUrl>
+  </metadata>
+</package>

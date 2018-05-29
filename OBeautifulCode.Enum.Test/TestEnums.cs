@@ -8,6 +8,7 @@
 namespace OBeautifulCode.Enum.Test
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable SA1649 // File name must match first type name
 #pragma warning disable SA1402 // File may only contain a single class
@@ -17,6 +18,7 @@ namespace OBeautifulCode.Enum.Test
     }
 
     [Flags]
+    [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "this is for testing purposes.")]
     public enum EmptyFlags
     {

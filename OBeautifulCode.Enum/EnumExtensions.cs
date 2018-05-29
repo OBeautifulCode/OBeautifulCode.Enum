@@ -16,7 +16,7 @@ namespace OBeautifulCode.Enum.Recipes
     using System.Linq;
     using System.Reflection;
 
-    using Spritely.Recipes;
+    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Adds some convenient extension methods to enums.
@@ -43,7 +43,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<TEnum> GetEnumValues<TEnum>()
             where TEnum : struct
         {
-            typeof(TEnum).IsEnum.Named($"typeof {nameof(TEnum)} is Enum").Must().BeTrue().OrThrow();
+            typeof(TEnum).IsEnum.Must().BeTrue($"typeof {nameof(TEnum)} is not an Enum");
 
             var result = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
             return result;
@@ -57,13 +57,14 @@ namespace OBeautifulCode.Enum.Recipes
         /// The members/values of the specified enum.
         /// For flags enums, returns all individual and combined flags.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="enumType"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="enumType"/> is not an enum.</exception>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "This is a developer-facing string, not a user-facing string.")]
         public static IReadOnlyCollection<Enum> GetEnumValues(
             this Type enumType)
         {
-            new { enumType }.Must().NotBeNull().OrThrow();
-            enumType.IsEnum.Named($"{nameof(enumType)} is Enum").Must().BeTrue().OrThrow();
+            new { enumType }.Must().NotBeNull();
+            enumType.IsEnum.Must().BeTrue($"{nameof(enumType)} is not an Enum");
 
             var result = Enum.GetValues(enumType).Cast<Enum>().ToList().AsReadOnly();
             return result;
@@ -83,7 +84,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static bool IsFlagsEnum<TEnum>()
             where TEnum : struct
         {
-            typeof(TEnum).IsEnum.Named($"typeof {nameof(TEnum)} is Enum").Must().BeTrue().OrThrow();
+            typeof(TEnum).IsEnum.Must().BeTrue($"typeof {nameof(TEnum)} is not an Enum");
 
             var result = typeof(TEnum).GetCustomAttributes<FlagsAttribute>().Any();
             return result;
@@ -96,14 +97,15 @@ namespace OBeautifulCode.Enum.Recipes
         /// <returns>
         /// true if the specified enum is a flags enum, otherwise false.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="enumType"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="enumType"/> is not an enum.</exception>
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "'Flags' is the most appropriate term here.")]
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "This is a developer-facing string, not a user-facing string.")]
         public static bool IsFlagsEnum(
             this Type enumType)
         {
-            new { enumType }.Must().NotBeNull().OrThrow();
-            enumType.IsEnum.Named($"{nameof(enumType)} is Enum").Must().BeTrue().OrThrow();
+            new { enumType }.Must().NotBeNull();
+            enumType.IsEnum.Must().BeTrue($"{nameof(enumType)} is not an Enum");
 
             var result = enumType.GetCustomAttributes<FlagsAttribute>().Any();
             return result;
@@ -129,7 +131,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetFlagsCombinedWherePossible(
             this Enum value)
         {
-            new { value }.Must().NotBeNull().OrThrow();
+            new { value }.Must().NotBeNull();
 
             var result = GetFlags(value, GetEnumValues(value.GetType()).ToArray()).ToList();
             return result;
@@ -159,8 +161,8 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum value)
             where TEnum : struct
         {
-            new { value }.Must().NotBeNull().OrThrow();
-            typeof(TEnum).IsEnum.Named($"typeof {nameof(TEnum)} is Enum").Must().BeTrue().OrThrow();
+            new { value }.Must().NotBeNull();
+            typeof(TEnum).IsEnum.Must().BeTrue($"typeof {nameof(TEnum)} is not an Enum");
 
             var result = GetFlags(value, GetEnumValues(value.GetType()).ToArray()).Cast<TEnum>().ToList();
             return result;
@@ -172,10 +174,15 @@ namespace OBeautifulCode.Enum.Recipes
         /// <param name="first">First to check.</param>
         /// <param name="second">Second to check.</param>
         /// <returns>Value indicating whether there is any overlap.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="first"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="second"/> is null.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "'Flag' is the most appropriate term here.")]
-        public static bool HasFlagOverlap(this Enum first, Enum second)
+        public static bool HasFlagOverlap(
+            this Enum first, 
+            Enum second)
         {
-            new { first, second }.Must().NotBeNull().OrThrowFirstFailure();
+            new { first }.Must().NotBeNull();
+            new { second }.Must().NotBeNull();
 
             var ret = first.GetIndividualFlags().Intersect(second.GetIndividualFlags()).Any();
             return ret;
@@ -198,7 +205,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetIndividualFlags(
             this Enum value)
         {
-            new { value }.Must().NotBeNull().OrThrow();
+            new { value }.Must().NotBeNull();
 
             IReadOnlyCollection<Enum> result;
             var enumType = value.GetType();
@@ -235,8 +242,8 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum value)
             where TEnum : struct
         {
-            new { value }.Must().NotBeNull().OrThrow();
-            typeof(TEnum).IsEnum.Named($"typeof {nameof(TEnum)} is Enum").Must().BeTrue().OrThrow();
+            new { value }.Must().NotBeNull();
+            typeof(TEnum).IsEnum.Must().BeTrue($"typeof {nameof(TEnum)} is not an Enum");
 
             IReadOnlyCollection<TEnum> result;
             var enumType = value.GetType();

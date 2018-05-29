@@ -271,7 +271,7 @@ namespace OBeautifulCode.Enum.Test
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
-            ex.Message.Should().Contain("typeof TEnum is Enum");
+            ex.Message.Should().Contain("typeof TEnum is not an Enum");
         }
 
         [Fact]
@@ -455,7 +455,7 @@ namespace OBeautifulCode.Enum.Test
 
             // Assert
             ex.Should().BeOfType<ArgumentException>();
-            ex.Message.Should().Contain("typeof TEnum is Enum");
+            ex.Message.Should().Contain("typeof TEnum is not an Enum");
         }
 
         [Fact]

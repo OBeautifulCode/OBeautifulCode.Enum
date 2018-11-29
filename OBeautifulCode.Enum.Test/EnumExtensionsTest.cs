@@ -18,74 +18,80 @@ namespace OBeautifulCode.Enum.Test
     public static class EnumExtensionsTest
     {
         [Fact]
-        public static void GetEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_is_not_of_type_Enum()
+        public static void GetEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var ex1 = Record.Exception(() => EnumExtensions.GetEnumValues<int>());
-            var ex2 = Record.Exception(() => EnumExtensions.GetEnumValues<bool>());
-            var ex3 = Record.Exception(() => EnumExtensions.GetEnumValues<byte>());
-            var ex4 = Record.Exception(() => EnumExtensions.GetEnumValues<char>());
+            var actual1 = Record.Exception(() => EnumExtensions.GetEnumValues<int>());
+            var actual2 = Record.Exception(() => EnumExtensions.GetEnumValues<bool>());
+            var actual3 = Record.Exception(() => EnumExtensions.GetEnumValues<byte>());
+            var actual4 = Record.Exception(() => EnumExtensions.GetEnumValues<char>());
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
 
             // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
-            ex3.Should().BeOfType<ArgumentException>();
-            ex4.Should().BeOfType<ArgumentException>();
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("typeof(TEnum).IsEnum");
+            }
         }
 
         [Fact]
         public static void GetEnumValues_TEnum___Should_return_enum_values_in_order___When_called()
         {
             // Arrange, Act
-            var enumValues1 = EnumExtensions.GetEnumValues<Empty>();
-            var enumValues2 = EnumExtensions.GetEnumValues<GoodStuff>();
-            var enumValues3 = EnumExtensions.GetEnumValues<TravelOptions>();
+            var actual1 = EnumExtensions.GetEnumValues<Empty>();
+            var actual2 = EnumExtensions.GetEnumValues<GoodStuff>();
+            var actual3 = EnumExtensions.GetEnumValues<TravelOptions>();
 
             // Assert
-            enumValues1.Should().BeEmpty();
-            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
-            enumValues3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
+            actual1.Should().BeEmpty();
+            actual2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
+            actual3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
         }
 
         [Fact]
-        public static void GetEnumValues_Type___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        public static void GetEnumValues_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => EnumExtensions.GetEnumValues(null));
+            var actual = Record.Exception(() => EnumExtensions.GetEnumValues(null));
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-            ex.Message.Should().Contain("enumType");
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("enumType");
         }
 
         [Fact]
-        public static void GetEnumValues_Type___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        public static void GetEnumValues_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var ex1 = Record.Exception(() => typeof(int).GetEnumValues());
-            var ex2 = Record.Exception(() => typeof(bool).GetEnumValues());
-            var ex3 = Record.Exception(() => typeof(byte).GetEnumValues());
-            var ex4 = Record.Exception(() => typeof(char).GetEnumValues());
+            var actual1 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(int)));
+            var actual2 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(bool)));
+            var actual3 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(byte)));
+            var actual4 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(char)));
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
 
             // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
-            ex3.Should().BeOfType<ArgumentException>();
-            ex4.Should().BeOfType<ArgumentException>();
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("enumType.IsEnum");
+            }
         }
 
         [Fact]
         public static void GetEnumValues_Type___Should_return_enum_values_in_order___When_called()
         {
             // Arrange, Act
-            var enumValues1 = typeof(Empty).GetEnumValues();
-            var enumValues2 = typeof(GoodStuff).GetEnumValues();
-            var enumValues3 = typeof(TravelOptions).GetEnumValues();
+            var actual1 = EnumExtensions.GetEnumValues(typeof(Empty));
+            var actual2 = EnumExtensions.GetEnumValues(typeof(GoodStuff));
+            var actual3 = EnumExtensions.GetEnumValues(typeof(TravelOptions));
 
             // Assert
-            enumValues1.Should().BeEmpty();
-            enumValues2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
-            enumValues3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
+            actual1.Should().BeEmpty();
+            actual2.Should().Equal(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
+            actual3.Should().Equal(TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.MassTransit, TravelOptions.Taxi, TravelOptions.Wheeled, TravelOptions.CommercialPlane, TravelOptions.Air);
         }
 
         [Fact]
@@ -96,16 +102,19 @@ namespace OBeautifulCode.Enum.Test
         public static void IsFlagsEnum_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var ex1 = Record.Exception(() => EnumExtensions.IsFlagsEnum<int>());
-            var ex2 = Record.Exception(() => EnumExtensions.IsFlagsEnum<bool>());
-            var ex3 = Record.Exception(() => EnumExtensions.IsFlagsEnum<byte>());
-            var ex4 = Record.Exception(() => EnumExtensions.IsFlagsEnum<char>());
+            var actual1 = Record.Exception(() => EnumExtensions.IsFlagsEnum<int>());
+            var actual2 = Record.Exception(() => EnumExtensions.IsFlagsEnum<bool>());
+            var actual3 = Record.Exception(() => EnumExtensions.IsFlagsEnum<byte>());
+            var actual4 = Record.Exception(() => EnumExtensions.IsFlagsEnum<char>());
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
 
             // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
-            ex3.Should().BeOfType<ArgumentException>();
-            ex4.Should().BeOfType<ArgumentException>();
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("typeof(TEnum).IsEnum");
+            }
         }
 
         [Fact]
@@ -145,14 +154,14 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void IsFlagsEnum_Type___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        public static void IsFlagsEnum_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => EnumExtensions.IsFlagsEnum(null));
+            var actual = Record.Exception(() => EnumExtensions.IsFlagsEnum(null));
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
-            ex.Message.Should().Contain("enumType");
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("enumType");
         }
 
         [Fact]
@@ -160,19 +169,22 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void IsFlagsEnum_Type___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        public static void IsFlagsEnum_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var ex1 = Record.Exception(() => typeof(int).IsFlagsEnum());
-            var ex2 = Record.Exception(() => typeof(bool).IsFlagsEnum());
-            var ex3 = Record.Exception(() => typeof(byte).IsFlagsEnum());
-            var ex4 = Record.Exception(() => typeof(char).IsFlagsEnum());
+            var actual1 = Record.Exception(() => typeof(int).IsFlagsEnum());
+            var actual2 = Record.Exception(() => typeof(bool).IsFlagsEnum());
+            var actual3 = Record.Exception(() => typeof(byte).IsFlagsEnum());
+            var actual4 = Record.Exception(() => typeof(char).IsFlagsEnum());
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
 
             // Assert
-            ex1.Should().BeOfType<ArgumentException>();
-            ex2.Should().BeOfType<ArgumentException>();
-            ex3.Should().BeOfType<ArgumentException>();
-            ex4.Should().BeOfType<ArgumentException>();
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("enumType.IsEnum");
+            }
         }
 
         [Fact]
@@ -180,7 +192,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void IsFlagsEnum_Type___Should_return_false___When_parameter_enumType_is_not_a_flags_enum()
+        public static void IsFlagsEnum_enumType___Should_return_false___When_parameter_enumType_is_not_a_flags_enum()
         {
             // Arrange, Act
             var actual1 = typeof(Empty).IsFlagsEnum();
@@ -196,7 +208,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void IsFlagsEnum_Type___Should_return_true___When_parameter_enumType_is_a_flags_enum()
+        public static void IsFlagsEnum_enumType___Should_return_true___When_parameter_enumType_is_a_flags_enum()
         {
             // Arrange, Act
             var actual1 = typeof(EmptyFlags).IsFlagsEnum();
@@ -212,13 +224,14 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        public static void GetFlagsCombinedWherePossible_value___Should_throw_ArgumentNullException___When_parameter_value_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ((Enum)null).GetFlagsCombinedWherePossible());
+            var actual = Record.Exception(() => ((Enum)null).GetFlagsCombinedWherePossible());
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value");
         }
 
         [Fact]
@@ -226,7 +239,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible___Should_return_enum_value___When_enum_is_not_a_flags_enum()
+        public static void GetFlagsCombinedWherePossible_value___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
             var value1 = GoodStuff.Chocolate;
@@ -246,7 +259,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible___Should_return_all_individual_flags___When_no_combined_flags_are_used()
+        public static void GetFlagsCombinedWherePossible_value___Should_return_all_individual_flags___When_no_combined_flags_are_used()
         {
             // Arrange
             var value1 = TravelOptions.None;
@@ -266,7 +279,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible___Should_return_all_combined_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
+        public static void GetFlagsCombinedWherePossible_value___Should_return_all_combined_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
         {
             // Arrange
             var value1 = TravelOptions.Wheeled;
@@ -286,7 +299,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
+        public static void GetFlagsCombinedWherePossible_value___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
         {
             // Arrange
             var value = TravelOptions.Wheeled | TravelOptions.MassTransit;
@@ -303,13 +316,14 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_throw_ArgumentNullException___When_parameter_value_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ((Enum)null).GetFlagsCombinedWherePossible<TravelOptions>());
+            var actual = Record.Exception(() => ((Enum)null).GetFlagsCombinedWherePossible<TravelOptions>());
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value");
         }
 
         [Fact]
@@ -317,17 +331,17 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_throw_ArgumentException___When_TEnum_is_not_an_enum()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
         {
             // Arrange
             var value = TravelOptions.PropellerPlane;
 
             // Act
-            var ex = Record.Exception(() => value.GetFlagsCombinedWherePossible<int>());
+            var acutal = Record.Exception(() => value.GetFlagsCombinedWherePossible<int>());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
-            ex.Message.Should().Contain("typeof TEnum is not an Enum");
+            acutal.Should().BeOfType<ArgumentException>();
+            acutal.Message.Should().Contain("typeof(TEnum).IsEnum");
         }
 
         [Fact]
@@ -335,7 +349,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_return_enum_value___When_enum_is_not_a_flags_enum()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
             var value1 = GoodStuff.Chocolate;
@@ -355,7 +369,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_return_all_individual_flags___When_no_combined_flags_are_used()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_return_all_individual_flags___When_no_combined_flags_are_used()
         {
             // Arrange
             var value1 = TravelOptions.None;
@@ -375,7 +389,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_return_all_combined_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_return_all_combined_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
         {
             // Arrange
             var value1 = TravelOptions.Wheeled;
@@ -395,7 +409,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetFlagsCombinedWherePossible_TEnum___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
+        public static void GetFlagsCombinedWherePossible_TEnum_value___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
         {
             // Arrange
             var value = TravelOptions.Wheeled | TravelOptions.MassTransit;
@@ -448,13 +462,14 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        public static void GetIndividualFlags_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ((Enum)null).GetIndividualFlags());
+            var actual = Record.Exception(() => ((Type)null).GetIndividualFlags());
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("enumType");
         }
 
         [Fact]
@@ -462,7 +477,112 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags___Should_return_enum_value___When_enum_is_not_a_flags_enum()
+        public static void GetIndividualFlags_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => typeof(string).GetIndividualFlags());
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("enumType.IsEnum");
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_enumType___Should_return_all_enum_values___When_parameter_enumType_is_a_non_flags_enum()
+        {
+            // Arrange, Act
+            var expected = new[] { GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers };
+            var actual = typeof(GoodStuff).GetIndividualFlags();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_enumType___Should_return_all_individual_flags___When_parameter_enumType_is_a_flags_enum()
+        {
+            // Arrange, Act
+            var expected = new[] { TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.Taxi, TravelOptions.CommercialPlane };
+            var actual = typeof(TravelOptions).GetIndividualFlags();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => EnumExtensions.GetIndividualFlags<int>());
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("typeof(TEnum).IsEnum");
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_TEnum___Should_return_all_enum_values___When_parameter_enumType_is_a_non_flags_enum()
+        {
+            // Arrange, Act
+            var expected = new[] { GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers };
+            var actual = EnumExtensions.GetIndividualFlags<GoodStuff>();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_TEnum___Should_return_all_individual_flags___When_parameter_enumType_is_a_flags_enum()
+        {
+            // Arrange, Act
+            var expected = new[] { TravelOptions.None, TravelOptions.Speedboat, TravelOptions.Train, TravelOptions.PropellerPlane, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.Taxi, TravelOptions.CommercialPlane };
+            var actual = EnumExtensions.GetIndividualFlags<TravelOptions>();
+
+            // Assert
+            actual.Should().Equal(expected);
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_value___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => ((Enum)null).GetIndividualFlags());
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value");
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void GetIndividualFlags_value___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
             var value1 = GoodStuff.Bulldogs;
@@ -482,7 +602,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags___Should_return_all_individual_flags___When_no_combined_flags_are_used()
+        public static void GetIndividualFlags_value___Should_return_all_individual_flags___When_no_combined_flags_are_used()
         {
             // Arrange
             var value1 = TravelOptions.None;
@@ -502,7 +622,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags___Should_return_all_individual_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
+        public static void GetIndividualFlags_value___Should_return_all_individual_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
         {
             // Arrange
             var value1 = TravelOptions.Wheeled;
@@ -522,7 +642,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
+        public static void GetIndividualFlags_value___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
         {
             // Arrange
             var value = TravelOptions.Wheeled | TravelOptions.MassTransit;
@@ -539,13 +659,14 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        public static void GetIndividualFlags_TEnum_value___Should_throw_ArgumentNullException___When_parameter_value_is_null()
         {
             // Arrange, Act
-            var ex = Record.Exception(() => ((Enum)null).GetIndividualFlags<TravelOptions>());
+            var actual = Record.Exception(() => ((Enum)null).GetIndividualFlags<TravelOptions>());
 
             // Assert
-            ex.Should().BeOfType<ArgumentNullException>();
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value");
         }
 
         [Fact]
@@ -553,17 +674,17 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_throw_ArgumentException___When_TEnum_is_not_an_enum()
+        public static void GetIndividualFlags_TEnum_value___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
         {
             // Arrange
             var value = TravelOptions.PropellerPlane;
 
             // Act
-            var ex = Record.Exception(() => value.GetIndividualFlags<int>());
+            var actual = Record.Exception(() => value.GetIndividualFlags<int>());
 
             // Assert
-            ex.Should().BeOfType<ArgumentException>();
-            ex.Message.Should().Contain("typeof TEnum is not an Enum");
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("typeof(TEnum).IsEnum");
         }
 
         [Fact]
@@ -571,7 +692,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_return_enum_value___When_enum_is_not_a_flags_enum()
+        public static void GetIndividualFlags_TEnum_value___Should_return_enum_value___When_enum_is_not_a_flags_enum()
         {
             // Arrange
             var value1 = GoodStuff.Bulldogs;
@@ -591,7 +712,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_return_all_individual_flags___When_no_combined_flags_are_used()
+        public static void GetIndividualFlags_TEnum_value___Should_return_all_individual_flags___When_no_combined_flags_are_used()
         {
             // Arrange
             var value1 = TravelOptions.None;
@@ -611,7 +732,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_return_all_individual_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
+        public static void GetIndividualFlags_TEnum_value___Should_return_all_individual_flags___When_only_combined_flags_are_used_and_they_have_no_overlapping_flags()
         {
             // Arrange
             var value1 = TravelOptions.Wheeled;
@@ -631,7 +752,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
+        public static void GetIndividualFlags_TEnum_value___Should_return_mix_of_combined_flags_and_individual_flags___When_only_combined_flags_are_used_but_they_have_an_overlapping_flag()
         {
             // Arrange
             var value = TravelOptions.Wheeled | TravelOptions.MassTransit;

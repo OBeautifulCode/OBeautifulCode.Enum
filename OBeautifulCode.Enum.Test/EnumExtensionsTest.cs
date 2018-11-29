@@ -492,7 +492,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_enumType___Should_return_all_enum_values___When_parameter_enumType_is_a_non_flags_enum()
+        public static void GetIndividualFlags_enumType___Should_return_all_enum_values___When_parameter_enumType_is_not_a_flags_enum()
         {
             // Arrange, Act
             var expected = new[] { GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers };
@@ -537,7 +537,7 @@ namespace OBeautifulCode.Enum.Test
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
         [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
-        public static void GetIndividualFlags_TEnum___Should_return_all_enum_values___When_parameter_enumType_is_a_non_flags_enum()
+        public static void GetIndividualFlags_TEnum___Should_return_all_enum_values___When_parameter_enumType_is_not_a_flags_enum()
         {
             // Arrange, Act
             var expected = new[] { GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers };

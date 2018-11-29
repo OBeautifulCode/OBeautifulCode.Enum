@@ -178,7 +178,7 @@ namespace OBeautifulCode.Enum.Recipes
         /// <exception cref="ArgumentNullException"><paramref name="second"/> is null.</exception>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "'Flag' is the most appropriate term here.")]
         public static bool HasFlagOverlap(
-            this Enum first, 
+            this Enum first,
             Enum second)
         {
             new { first }.Must().NotBeNull();
@@ -225,6 +225,7 @@ namespace OBeautifulCode.Enum.Recipes
         /// If <typeparamref name="TEnum"/> is not a flags enum then all enum values are returned.
         /// </returns>
         /// <exception cref="ArgumentException"><typeparamref name="TEnum"/> is not of type <see cref="Enum"/>.</exception>
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "'Flags' is the most appropriate term here.")]
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "This is a developer-facing string, not a user-facing string.")]
         public static IReadOnlyCollection<TEnum> GetIndividualFlags<TEnum>()
             where TEnum : struct

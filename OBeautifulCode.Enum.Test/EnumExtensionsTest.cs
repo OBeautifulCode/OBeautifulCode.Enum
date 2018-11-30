@@ -763,5 +763,109 @@ namespace OBeautifulCode.Enum.Test
             // Assert
             actual.Should().Equal(TravelOptions.Train, TravelOptions.RentalCar, TravelOptions.Bus, TravelOptions.Taxi);
         }
+
+        [Fact]
+        public static void BitwiseOr___Should_throw_ArgumentNullException___When_parameter_value1_is_null()
+        {
+            // Arrange
+            var value2 = TravelOptions.Speedboat;
+
+            // Act
+            var actual = Record.Exception(() => EnumExtensions.BitwiseOr(null, value2));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value1");
+        }
+
+        [Fact]
+        public static void BitwiseOr___Should_throw_ArgumentNullException___When_parameter_value2_is_null()
+        {
+            // Arrange
+            var value1 = TravelOptions.Bus;
+
+            // Act
+            var actual = Record.Exception(() => value1.BitwiseOr(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("value2");
+        }
+
+        [Fact]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "flags", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flag", Justification = "this is the best term")]
+        [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags", Justification = "this is the best term")]
+        public static void BitwiseOr___Should_throw_ArgumentException___When_parameter_value1_type_is_not_a_flags_enum()
+        {
+            // Arrange
+            var value1 = GoodStuff.Bulldogs;
+            var value2 = GoodStuff.Chocolate;
+
+            // Act
+            var actual = Record.Exception(() => value1.BitwiseOr(value2));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("value1.GetType().IsFlagsEnum()");
+        }
+
+        [Fact]
+        public static void BitwiseOr___Should_throw_ArgumentException___When_parameter_value1_type_is_not_equal_to_parameter_value2_type()
+        {
+            // Arrange
+            var value1 = TravelOptions.Bus;
+            var value2 = GoodStuff.Chocolate;
+
+            // Act
+            var actual = Record.Exception(() => value1.BitwiseOr(value2));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentException>();
+            actual.Message.Should().Contain("value1.GetType() == value2.GetType()");
+        }
+
+        [Fact]
+        public static void BitwiseOr___Should_return_bitwise_or_of_specified_values___When_called_on_signed_enum()
+        {
+            // Arrange
+            var value1a = TravelOptions.Air;
+            var value1b = TravelOptions.Bus;
+            var expected1 = value1a | value1b;
+
+            var value2a = TravelOptions.MassTransit;
+            var value2b = TravelOptions.Speedboat;
+            var expected2 = value2a | value2b;
+
+            // Act
+            var actual1 = value1a.BitwiseOr(value1b);
+            var actual2 = value2a.BitwiseOr(value2b);
+
+            // Assert
+            actual1.Should().Be(expected1);
+            actual2.Should().Be(expected2);
+        }
+
+        [Fact]
+        public static void BitwiseOr___Should_return_bitwise_or_of_specified_values___When_called_on_unsigned_enum()
+        {
+            // Arrange
+            var value1a = UnsignedTravelOptions.Air;
+            var value1b = UnsignedTravelOptions.Bus;
+            var expected1 = value1a | value1b;
+
+            var value2a = UnsignedTravelOptions.MassTransit;
+            var value2b = UnsignedTravelOptions.Speedboat;
+            var expected2 = value2a | value2b;
+
+            // Act
+            var actual1 = value1a.BitwiseOr(value1b);
+            var actual2 = value2a.BitwiseOr(value2b);
+
+            // Assert
+            actual1.Should().Be(expected1);
+            actual2.Should().Be(expected2);
+        }
     }
 }

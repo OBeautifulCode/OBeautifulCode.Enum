@@ -62,6 +62,35 @@ namespace OBeautifulCode.Enum.Test
         MassTransit = Train | Bus,
     }
 
+    [Flags]
+    [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "We are intentionally making this a ulong to test branch logic.")]
+#pragma warning disable CS3009 // Base type is not CLS-compliant
+    public enum UnsignedTravelOptions : ulong
+#pragma warning restore CS3009 // Base type is not CLS-compliant
+    {
+        None = 0,
+
+        Speedboat = 1,
+
+        Train = 2,
+
+        PropellerPlane = 4,
+
+        RentalCar = 8,
+
+        Bus = 16,
+
+        Taxi = 32,
+
+        CommercialPlane = 64,
+
+        Air = PropellerPlane | CommercialPlane,
+
+        Wheeled = RentalCar | Bus | Taxi,
+
+        MassTransit = Train | Bus,
+    }
+
 #pragma warning restore SA1402 // File may only contain a single class
 #pragma warning restore SA1649 // File name must match first type name
 }

@@ -63,6 +63,25 @@ namespace OBeautifulCode.Enum.Test
     }
 
     [Flags]
+    [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames", Justification = "This is fine.")]
+    public enum DaysWeWork
+    {
+        None = 0,
+
+        Monday = 1,
+
+        Tuesday = 2,
+
+        Wednesday = 4,
+
+        Thursday = 8,
+
+        MondayAndThursday = Monday | Thursday,
+
+        TuesdayAndWednesday = Tuesday | Wednesday,
+    }
+
+    [Flags]
     [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32", Justification = "We are intentionally making this a ulong to test branch logic.")]
 #pragma warning disable CS3009 // Base type is not CLS-compliant
     public enum UnsignedTravelOptions : ulong

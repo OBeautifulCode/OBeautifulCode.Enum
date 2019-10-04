@@ -18,13 +18,13 @@ namespace OBeautifulCode.Enum.Test
     public static class EnumExtensionsTest
     {
         [Fact]
-        public static void GetEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
+        public static void GetDefinedEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var actual1 = Record.Exception(() => EnumExtensions.GetEnumValues<int>());
-            var actual2 = Record.Exception(() => EnumExtensions.GetEnumValues<bool>());
-            var actual3 = Record.Exception(() => EnumExtensions.GetEnumValues<byte>());
-            var actual4 = Record.Exception(() => EnumExtensions.GetEnumValues<char>());
+            var actual1 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues<int>());
+            var actual2 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues<bool>());
+            var actual3 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues<byte>());
+            var actual4 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues<char>());
 
             var actuals = new[] { actual1, actual2, actual3, actual4 };
 
@@ -37,12 +37,12 @@ namespace OBeautifulCode.Enum.Test
         }
 
         [Fact]
-        public static void GetEnumValues_TEnum___Should_return_enum_values_in_order___When_called()
+        public static void GetDefinedEnumValues_TEnum___Should_return_enum_values_in_order___When_called()
         {
             // Arrange, Act
-            var actual1 = EnumExtensions.GetEnumValues<Empty>();
-            var actual2 = EnumExtensions.GetEnumValues<GoodStuff>();
-            var actual3 = EnumExtensions.GetEnumValues<TravelOptions>();
+            var actual1 = EnumExtensions.GetDefinedEnumValues<Empty>();
+            var actual2 = EnumExtensions.GetDefinedEnumValues<GoodStuff>();
+            var actual3 = EnumExtensions.GetDefinedEnumValues<TravelOptions>();
 
             // Assert
             actual1.Should().BeEmpty();
@@ -51,10 +51,10 @@ namespace OBeautifulCode.Enum.Test
         }
 
         [Fact]
-        public static void GetEnumValues_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        public static void GetDefinedEnumValues_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
         {
             // Arrange, Act
-            var actual = Record.Exception(() => EnumExtensions.GetEnumValues(null));
+            var actual = Record.Exception(() => EnumExtensions.GetDefinedEnumValues(null));
 
             // Assert
             actual.Should().BeOfType<ArgumentNullException>();
@@ -62,13 +62,13 @@ namespace OBeautifulCode.Enum.Test
         }
 
         [Fact]
-        public static void GetEnumValues_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        public static void GetDefinedEnumValues_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
         {
             // Arrange, Act
-            var actual1 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(int)));
-            var actual2 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(bool)));
-            var actual3 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(byte)));
-            var actual4 = Record.Exception(() => EnumExtensions.GetEnumValues(typeof(char)));
+            var actual1 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues(typeof(int)));
+            var actual2 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues(typeof(bool)));
+            var actual3 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues(typeof(byte)));
+            var actual4 = Record.Exception(() => EnumExtensions.GetDefinedEnumValues(typeof(char)));
 
             var actuals = new[] { actual1, actual2, actual3, actual4 };
 
@@ -81,12 +81,12 @@ namespace OBeautifulCode.Enum.Test
         }
 
         [Fact]
-        public static void GetEnumValues_Type___Should_return_enum_values_in_order___When_called()
+        public static void GetDefinedEnumValues_Type___Should_return_enum_values_in_order___When_called()
         {
             // Arrange, Act
-            var actual1 = EnumExtensions.GetEnumValues(typeof(Empty));
-            var actual2 = EnumExtensions.GetEnumValues(typeof(GoodStuff));
-            var actual3 = EnumExtensions.GetEnumValues(typeof(TravelOptions));
+            var actual1 = EnumExtensions.GetDefinedEnumValues(typeof(Empty));
+            var actual2 = EnumExtensions.GetDefinedEnumValues(typeof(GoodStuff));
+            var actual3 = EnumExtensions.GetDefinedEnumValues(typeof(TravelOptions));
 
             // Assert
             actual1.Should().BeEmpty();
@@ -217,6 +217,115 @@ namespace OBeautifulCode.Enum.Test
             // Assert
             actual1.Should().BeTrue();
             actual2.Should().BeTrue();
+        }
+
+        [Fact]
+        public static void GetAllPossibleEnumValues_TEnum___Should_throw_ArgumentException___When_generic_type_parameter_TEnum_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var actual1 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues<int>());
+            var actual2 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues<bool>());
+            var actual3 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues<byte>());
+            var actual4 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues<char>());
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("typeof(TEnum).IsEnum");
+            }
+        }
+
+        [Fact]
+        public static void GetAllPossibleEnumValues_TEnum___Should_return_all_possible_enum_values___When_called()
+        {
+            // Arrange, Act
+            var actual1 = EnumExtensions.GetAllPossibleEnumValues<Empty>();
+            var actual2 = EnumExtensions.GetAllPossibleEnumValues<GoodStuff>();
+            var actual3 = EnumExtensions.GetAllPossibleEnumValues<DaysWeWork>();
+
+            // Assert
+            actual1.Should().BeEmpty();
+            actual2.Should().BeEquivalentTo(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
+            actual3.Should().BeEquivalentTo(
+                DaysWeWork.None,
+                DaysWeWork.Monday,
+                DaysWeWork.Tuesday,
+                DaysWeWork.Wednesday,
+                DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday,
+                DaysWeWork.Monday | DaysWeWork.Wednesday,
+                DaysWeWork.Monday | DaysWeWork.Thursday,
+                DaysWeWork.Tuesday | DaysWeWork.Wednesday,
+                DaysWeWork.Tuesday | DaysWeWork.Thursday,
+                DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Wednesday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Tuesday | DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Wednesday | DaysWeWork.Thursday);
+        }
+
+        [Fact]
+        public static void GetAllPossibleEnumValues_enumType___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues(null));
+
+            // Assert
+            actual.Should().BeOfType<ArgumentNullException>();
+            actual.Message.Should().Contain("enumType");
+        }
+
+        [Fact]
+        public static void GetAllPossibleEnumValues_enumType___Should_throw_ArgumentException___When_parameter_enumType_is_not_of_type_Enum()
+        {
+            // Arrange, Act
+            var actual1 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues(typeof(int)));
+            var actual2 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues(typeof(bool)));
+            var actual3 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues(typeof(byte)));
+            var actual4 = Record.Exception(() => EnumExtensions.GetAllPossibleEnumValues(typeof(char)));
+
+            var actuals = new[] { actual1, actual2, actual3, actual4 };
+
+            // Assert
+            foreach (var actual in actuals)
+            {
+                actual.Should().BeOfType<ArgumentException>();
+                actual.Message.Should().Contain("enumType.IsEnum");
+            }
+        }
+
+        [Fact]
+        public static void GetAllPossibleEnumValues_Type___Should_return_all_possible_enum_values___When_called()
+        {
+            // Arrange, Act
+            var actual1 = EnumExtensions.GetAllPossibleEnumValues(typeof(Empty));
+            var actual2 = EnumExtensions.GetAllPossibleEnumValues(typeof(GoodStuff));
+            var actual3 = EnumExtensions.GetAllPossibleEnumValues(typeof(DaysWeWork));
+
+            // Assert
+            actual1.Should().BeEmpty();
+            actual2.Should().BeEquivalentTo(GoodStuff.WorkingFromHome, GoodStuff.Chocolate, GoodStuff.Vacation, GoodStuff.Bulldogs, GoodStuff.Sunflowers);
+            actual3.Should().BeEquivalentTo(
+                DaysWeWork.None,
+                DaysWeWork.Monday,
+                DaysWeWork.Tuesday,
+                DaysWeWork.Wednesday,
+                DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday,
+                DaysWeWork.Monday | DaysWeWork.Wednesday,
+                DaysWeWork.Monday | DaysWeWork.Thursday,
+                DaysWeWork.Tuesday | DaysWeWork.Wednesday,
+                DaysWeWork.Tuesday | DaysWeWork.Thursday,
+                DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Wednesday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Tuesday | DaysWeWork.Wednesday | DaysWeWork.Thursday,
+                DaysWeWork.Monday | DaysWeWork.Tuesday | DaysWeWork.Wednesday | DaysWeWork.Thursday);
         }
 
         [Fact]

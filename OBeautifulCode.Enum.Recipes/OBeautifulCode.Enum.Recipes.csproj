@@ -7,8 +7,8 @@
     <ProjectGuid>{1DCF8BFB-C8DC-45C4-8D3E-D25451BAA7FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.Enum</RootNamespace>
-    <AssemblyName>OBeautifulCode.Enum</AssemblyName>
+    <RootNamespace>OBeautifulCode.Enum.Recipes</RootNamespace>
+    <AssemblyName>OBeautifulCode.Enum.Recipes</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -24,7 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Debug\OBeautifulCode.Enum.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\OBeautifulCode.Enum.Recipes.XML</DocumentationFile>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <CodeAnalysisRuleSet />
   </PropertyGroup>
@@ -36,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>bin\Release\OBeautifulCode.Enum.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\OBeautifulCode.Enum.Recipes.XML</DocumentationFile>
     <CodeAnalysisRuleSet />
   </PropertyGroup>
   <ItemGroup>
@@ -78,9 +78,6 @@
     <None Include=".analyzers\release.ruleset" />
     <None Include="EnumExtensions.recipe-nuspec" />
     <None Include="packages.config" />
-    <None Include="OBeautifulCode.Enum.override-nuspec">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="nuget-icon.png" />

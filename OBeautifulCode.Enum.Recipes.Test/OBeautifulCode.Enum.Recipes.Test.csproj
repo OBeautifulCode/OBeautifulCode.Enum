@@ -8,8 +8,8 @@
     <ProjectGuid>{3EEF4E37-1D7D-4C77-BD92-EBBF03765DCC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OBeautifulCode.Enum.Test</RootNamespace>
-    <AssemblyName>OBeautifulCode.Enum.Test</AssemblyName>
+    <RootNamespace>OBeautifulCode.Enum.Recipes.Test</RootNamespace>
+    <AssemblyName>OBeautifulCode.Enum.Recipes.Test</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -72,9 +72,9 @@
     <Compile Include="TestEnums.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OBeautifulCode.Enum\OBeautifulCode.Enum.csproj">
+    <ProjectReference Include="..\OBeautifulCode.Enum.Recipes\OBeautifulCode.Enum.Recipes.csproj">
       <Project>{1DCF8BFB-C8DC-45C4-8D3E-D25451BAA7FC}</Project>
-      <Name>OBeautifulCode.Enum</Name>
+      <Name>OBeautifulCode.Enum.Recipes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

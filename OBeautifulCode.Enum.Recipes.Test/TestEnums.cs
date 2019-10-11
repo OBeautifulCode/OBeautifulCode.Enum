@@ -4,7 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OBeautifulCode.Enum.Test
+namespace OBeautifulCode.Enum.Recipes.Test
 {
     using System;
     using System.Diagnostics.CodeAnalysis;

@@ -16,8 +16,8 @@ namespace OBeautifulCode.Enum.Recipes
     using System.Linq;
     using System.Reflection;
 
+    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Collection.Recipes;
-    using OBeautifulCode.Validation.Recipes;
 
     /// <summary>
     /// Adds some convenient extension methods to enums.
@@ -44,7 +44,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<TEnum> GetDefinedEnumValues<TEnum>()
             where TEnum : struct
         {
-            typeof(TEnum).IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            typeof(TEnum).IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = Enum.GetValues(typeof(TEnum)).Cast<TEnum>().ToList();
             return result;
@@ -64,8 +64,8 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetDefinedEnumValues(
             this Type enumType)
         {
-            new { enumType }.Must().NotBeNull();
-            enumType.IsEnum.Named($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
+            new { enumType }.AsArg().Must().NotBeNull();
+            enumType.IsEnum.AsArg($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = Enum.GetValues(enumType).Cast<Enum>().ToList().AsReadOnly();
             return result;
@@ -85,7 +85,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static bool IsFlagsEnum<TEnum>()
             where TEnum : struct
         {
-            typeof(TEnum).IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            typeof(TEnum).IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = typeof(TEnum).GetCustomAttributes<FlagsAttribute>().Any();
             return result;
@@ -105,8 +105,8 @@ namespace OBeautifulCode.Enum.Recipes
         public static bool IsFlagsEnum(
             this Type enumType)
         {
-            new { enumType }.Must().NotBeNull();
-            enumType.IsEnum.Named($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
+            new { enumType }.AsArg().Must().NotBeNull();
+            enumType.IsEnum.AsArg($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = enumType.GetCustomAttributes<FlagsAttribute>().Any();
             return result;
@@ -128,7 +128,7 @@ namespace OBeautifulCode.Enum.Recipes
         {
             var enumType = typeof(TEnum);
 
-            enumType.IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            enumType.IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = GetAllPossibleEnumValues(enumType).Cast<TEnum>().ToList();
 
@@ -150,8 +150,8 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetAllPossibleEnumValues(
             this Type enumType)
         {
-            new { enumType }.Must().NotBeNull();
-            enumType.IsEnum.Named($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
+            new { enumType }.AsArg().Must().NotBeNull();
+            enumType.IsEnum.AsArg($"{nameof(enumType)}.{nameof(Type.IsEnum)}").Must().BeTrue();
 
             IReadOnlyCollection<Enum> result;
             if (enumType.IsFlagsEnum())
@@ -186,7 +186,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetFlagsCombinedWherePossible(
             this Enum value)
         {
-            new { value }.Must().NotBeNull();
+            new { value }.AsArg().Must().NotBeNull();
 
             var result = GetFlags(value, GetDefinedEnumValues(value.GetType()).ToArray()).ToList();
             return result;
@@ -216,8 +216,8 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum value)
             where TEnum : struct
         {
-            new { value }.Must().NotBeNull();
-            typeof(TEnum).IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            new { value }.AsArg().Must().NotBeNull();
+            typeof(TEnum).IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = GetFlags(value, GetDefinedEnumValues(value.GetType()).ToArray()).Cast<TEnum>().ToList();
             return result;
@@ -236,8 +236,8 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum first,
             Enum second)
         {
-            new { first }.Must().NotBeNull();
-            new { second }.Must().NotBeNull();
+            new { first }.AsArg().Must().NotBeNull();
+            new { second }.AsArg().Must().NotBeNull();
 
             var ret = first.GetIndividualFlags().Intersect(second.GetIndividualFlags()).Any();
             return ret;
@@ -278,7 +278,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<TEnum> GetIndividualFlags<TEnum>()
             where TEnum : struct
         {
-            typeof(TEnum).IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            typeof(TEnum).IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             var result = typeof(TEnum).GetIndividualFlags().Cast<TEnum>().ToList();
 
@@ -302,7 +302,7 @@ namespace OBeautifulCode.Enum.Recipes
         public static IReadOnlyCollection<Enum> GetIndividualFlags(
             this Enum value)
         {
-            new { value }.Must().NotBeNull();
+            new { value }.AsArg().Must().NotBeNull();
 
             IReadOnlyCollection<Enum> result;
             var enumType = value.GetType();
@@ -339,8 +339,8 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum value)
             where TEnum : struct
         {
-            new { value }.Must().NotBeNull();
-            typeof(TEnum).IsEnum.Named($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
+            new { value }.AsArg().Must().NotBeNull();
+            typeof(TEnum).IsEnum.AsArg($"typeof({nameof(TEnum)}).{nameof(Type.IsEnum)}").Must().BeTrue();
 
             IReadOnlyCollection<TEnum> result;
             var enumType = value.GetType();
@@ -372,14 +372,14 @@ namespace OBeautifulCode.Enum.Recipes
             this Enum value1,
             Enum value2)
         {
-            new { value1 }.Must().NotBeNull();
-            new { value2 }.Must().NotBeNull();
+            new { value1 }.AsArg().Must().NotBeNull();
+            new { value2 }.AsArg().Must().NotBeNull();
 
             var value1Type = value1.GetType();
             var value2Type = value2.GetType();
 
-            value1Type.IsFlagsEnum().Named($"{nameof(value1)}.{nameof(GetType)}().{nameof(IsFlagsEnum)}()").Must().BeTrue();
-            (value1Type == value2Type).Named($"{nameof(value1)}.{nameof(GetType)}() == {nameof(value2)}.{nameof(GetType)}()").Must().BeTrue();
+            value1Type.IsFlagsEnum().AsArg($"{nameof(value1)}.{nameof(GetType)}().{nameof(IsFlagsEnum)}()").Must().BeTrue();
+            (value1Type == value2Type).AsArg($"{nameof(value1)}.{nameof(GetType)}() == {nameof(value2)}.{nameof(GetType)}()").Must().BeTrue();
 
             Enum result;
             if (Enum.GetUnderlyingType(value1Type) != typeof(ulong))

@@ -1,13 +1,13 @@
-﻿<?xml version="1.0"?>
-<package >
+<?xml version="1.0"?>
+<package>
   <metadata>
     <id>OBeautifulCode.Enum.Recipes.EnumExtensions</id>
     <description>Convenience methods for enums.</description>
     <tags>enum enumeration extension extensionmethod</tags>
     <iconUrl>https://raw.githubusercontent.com/OBeautifulCode/OBeautifulCode.Enum/master/OBeautifulCode.Enum.Recipes/nuget-icon.png</iconUrl>
     <dependencies>
-      <dependency id="OBeautifulCode.Assertion.Recipes.Must" version="1.0.12" />
-      <dependency id="OBeautifulCode.Collection.Recipes.EnumerableExtensions" version="1.0.41" />
+      <dependency id="OBeautifulCode.Assertion.Recipes.Must" version="1.0.15" />
+      <dependency id="OBeautifulCode.Collection.Recipes.EnumerableExtensions" version="1.0.42" />
     </dependencies>
   </metadata>
   <files>

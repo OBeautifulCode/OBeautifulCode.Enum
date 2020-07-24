@@ -16,7 +16,6 @@ namespace OBeautifulCode.Enum.Recipes
     using System.Linq;
     using System.Reflection;
 
-    using OBeautifulCode.Assertion.Recipes;
     using OBeautifulCode.Collection.Recipes;
 
     /// <summary>

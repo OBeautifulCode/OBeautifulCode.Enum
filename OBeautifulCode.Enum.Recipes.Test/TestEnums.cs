@@ -110,6 +110,18 @@ namespace OBeautifulCode.Enum.Recipes.Test
         MassTransit = Train | Bus,
     }
 
+    [Flags]
+    public enum Colors
+    {
+        None = 0,
+
+        Red = 1,
+
+        Green = 2,
+
+        Blue = 4,
+    }
+
 #pragma warning restore SA1402 // File may only contain a single class
 #pragma warning restore SA1649 // File name must match first type name
 }

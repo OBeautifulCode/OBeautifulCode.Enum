@@ -8,8 +8,13 @@ namespace OBeautifulCode.Enum.Recipes.Test
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+
+    using FakeItEasy;
 
     using FluentAssertions;
+
+    using OBeautifulCode.Assertion.Recipes;
 
     using Xunit;
 
@@ -973,6 +978,276 @@ namespace OBeautifulCode.Enum.Recipes.Test
             // Assert
             actual1.Should().Be(expected1);
             actual2.Should().Be(expected2);
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => EnumExtensions.ToEnum<Colors>(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("value");
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_throw_ArgumentException___When_parameter_value_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => " \r\n ".ToEnum<Colors>());
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().ContainString("value");
+            actual.Message.AsTest().Must().ContainString("white space");
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_throw_ArgumentException___When_generic_argument_TEnum_does_not_represent_an_enumeration()
+        {
+            // Arrange
+            var value = A.Dummy<Colors>().ToString();
+
+            // Act
+            var actuals = new[]
+            {
+                Record.Exception(() => value.ToEnum<int>()),
+                Record.Exception(() => value.ToEnum<bool>()),
+                Record.Exception(() => value.ToEnum<byte>()),
+                Record.Exception(() => value.ToEnum<Guid>()),
+            };
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("typeof(TEnum).IsEnum is false");
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_throw_ArgumentException___When_ignoreCase_is_false_and_value_cannot_be_converted_to_enum_member_of_TEnum()
+        {
+            // Arrange
+            var values = new[]
+            {
+                "8",
+                "blue",
+                "Yellow",
+                "Red|Green",
+                "Red | Green",
+            };
+
+            // Act
+            var actuals = values.Select(_ => Record.Exception(() => _.ToEnum<Colors>(ignoreCase: false))).ToList();
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("Cannot convert the specified value to an enum member of the 'Colors' enum.   Specified value is");
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_throw_ArgumentException___When_ignoreCase_is_true_and_value_cannot_be_converted_to_enum_member_of_TEnum()
+        {
+            // Arrange
+            var values = new[]
+            {
+                "8",
+                "Yellow",
+                "Red|Green",
+                "Red | Green",
+            };
+
+            // Act
+            var actuals = values.Select(_ => Record.Exception(() => _.ToEnum<Colors>(ignoreCase: true))).ToList();
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("Cannot convert the specified value to an enum member of the 'Colors' enum.   Specified value is");
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_convert_specified_value_to_TEnum___When_ignoreCase_is_false()
+        {
+            // Arrange
+            var valuesAndExpected = new[]
+            {
+                new { Value = "0", Expected = Colors.None },
+                new { Value = "2", Expected = Colors.Green },
+                new { Value = "7", Expected = Colors.Red | Colors.Green | Colors.Blue },
+                new { Value = "Blue", Expected = Colors.Blue },
+                new { Value = "Red, Green", Expected = Colors.Red | Colors.Green },
+                new { Value = "Red,Green", Expected = Colors.Red | Colors.Green },
+            };
+
+            // Act
+            var actuals = valuesAndExpected.Select(_ => _.Value.ToEnum<Colors>(ignoreCase: false)).ToList();
+
+            // Assert
+            valuesAndExpected.Select(_ => _.Expected).ToList().AsTest().Must().BeEqualTo(actuals);
+        }
+
+        [Fact]
+        public static void ToEnum_TEnum___Should_convert_specified_value_to_TEnum___When_ignoreCase_is_true()
+        {
+            // Arrange
+            var valuesAndExpected = new[]
+            {
+                new { Value = "0", Expected = Colors.None },
+                new { Value = "2", Expected = Colors.Green },
+                new { Value = "7", Expected = Colors.Red | Colors.Green | Colors.Blue },
+                new { Value = "Blue", Expected = Colors.Blue },
+                new { Value = "blue", Expected = Colors.Blue },
+                new { Value = "Red, Green", Expected = Colors.Red | Colors.Green },
+                new { Value = "red,green", Expected = Colors.Red | Colors.Green },
+            };
+
+            // Act
+            var actuals = valuesAndExpected.Select(_ => _.Value.ToEnum<Colors>(ignoreCase: true)).ToList();
+
+            // Assert
+            valuesAndExpected.Select(_ => _.Expected).ToList().AsTest().Must().BeEqualTo(actuals);
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentNullException___When_parameter_value_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => EnumExtensions.ToEnum(null, typeof(Colors)));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("value");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentException___When_parameter_value_is_null()
+        {
+            // Arrange, Act
+            var actual = Record.Exception(() => " \r\n ".ToEnum(typeof(Colors)));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentException>();
+            actual.Message.AsTest().Must().ContainString("value");
+            actual.Message.AsTest().Must().ContainString("white space");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentNullException___When_parameter_enumType_is_null()
+        {
+            // Arrange
+            var value = A.Dummy<Colors>().ToString();
+
+            // Act
+            var actual = Record.Exception(() => value.ToEnum(null));
+
+            // Assert
+            actual.AsTest().Must().BeOfType<ArgumentNullException>();
+            actual.Message.AsTest().Must().ContainString("enumType");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentException___When_parameter_enumType_does_not_represent_an_enumeration()
+        {
+            // Arrange
+            var value = A.Dummy<Colors>().ToString();
+
+            // Act
+            var actuals = new[]
+            {
+                Record.Exception(() => value.ToEnum(typeof(int))),
+                Record.Exception(() => value.ToEnum(typeof(bool))),
+                Record.Exception(() => value.ToEnum(typeof(byte))),
+                Record.Exception(() => value.ToEnum(typeof(Guid))),
+            };
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("enumType.IsEnum is false");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentException___When_ignoreCase_is_false_and_value_cannot_be_converted_to_enum_member_of_enumType()
+        {
+            // Arrange
+            var values = new[]
+            {
+                "8",
+                "blue",
+                "Yellow",
+                "Red|Green",
+                "Red | Green",
+            };
+
+            // Act
+            var actuals = values.Select(_ => Record.Exception(() => _.ToEnum(typeof(Colors), ignoreCase: false))).ToList();
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("Cannot convert the specified value to an enum member of the 'Colors' enum.   Specified value is");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_throw_ArgumentException___When_ignoreCase_is_true_and_value_cannot_be_converted_to_enum_member_of_enumType()
+        {
+            // Arrange
+            var values = new[]
+            {
+                "8",
+                "Yellow",
+                "Red|Green",
+                "Red | Green",
+            };
+
+            // Act
+            var actuals = values.Select(_ => Record.Exception(() => _.ToEnum(typeof(Colors), ignoreCase: true))).ToList();
+
+            // Assert
+            actuals.AsTest().Must().Each().BeOfType<ArgumentException>();
+            actuals.Select(_ => _.Message).AsTest().Must().Each().ContainString("Cannot convert the specified value to an enum member of the 'Colors' enum.   Specified value is");
+        }
+
+        [Fact]
+        public static void ToEnum___Should_convert_specified_value_to_enumType___When_ignoreCase_is_false()
+        {
+            // Arrange
+            var valuesAndExpected = new[]
+            {
+                new { Value = "0", Expected = Colors.None },
+                new { Value = "2", Expected = Colors.Green },
+                new { Value = "7", Expected = Colors.Red | Colors.Green | Colors.Blue },
+                new { Value = "Blue", Expected = Colors.Blue },
+                new { Value = "Red, Green", Expected = Colors.Red | Colors.Green },
+                new { Value = "Red,Green", Expected = Colors.Red | Colors.Green },
+            };
+
+            // Act
+            var actuals = valuesAndExpected.Select(_ => _.Value.ToEnum(typeof(Colors), ignoreCase: false)).ToList();
+
+            // Assert
+            valuesAndExpected.Select(_ => _.Expected).Cast<Enum>().ToList().AsTest().Must().BeEqualTo(actuals);
+        }
+
+        [Fact]
+        public static void ToEnum___Should_convert_specified_value_to_enumType___When_ignoreCase_is_true()
+        {
+            // Arrange
+            var valuesAndExpected = new[]
+            {
+                new { Value = "0", Expected = Colors.None },
+                new { Value = "2", Expected = Colors.Green },
+                new { Value = "7", Expected = Colors.Red | Colors.Green | Colors.Blue },
+                new { Value = "Blue", Expected = Colors.Blue },
+                new { Value = "blue", Expected = Colors.Blue },
+                new { Value = "Red, Green", Expected = Colors.Red | Colors.Green },
+                new { Value = "red,green", Expected = Colors.Red | Colors.Green },
+            };
+
+            // Act
+            var actuals = valuesAndExpected.Select(_ => _.Value.ToEnum(typeof(Colors), ignoreCase: true)).ToList();
+
+            // Assert
+            valuesAndExpected.Select(_ => _.Expected).Cast<Enum>().ToList().AsTest().Must().BeEqualTo(actuals);
         }
     }
 }
